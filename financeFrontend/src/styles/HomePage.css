@@ -1,0 +1,45 @@
+header {
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.hero-section {
+  background-color: var(--background-secondary);
+  padding: 6rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  color: var(--text-secondary);
+}
+
+.hero-image {
+  max-width: 450px;
+  margin-top: 2rem;
+}
+
+.features-section {
+  padding: 5rem 0;
+  background-color: var(--background-primary);
+}
+
+.feature-item {
+  text-align: center;
+  padding: 2rem;
+}
+
+.feature-item h3 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.feature-item p {
+  color: var(--text-secondary);
+}

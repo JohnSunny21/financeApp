@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+
+  # Service 1: The Spring Boot Backend
+  backend:
+    build:
+      context: ./financeBackend
+    container_name: backend-compose
+    restart: unless-stopped
+    ports:
+      - "8282:8282"
+    environment:
+      # We use the special 'host.docker.internal' DNS name.
+      # This name resolves to the IP address of the machine hosting the Docker containers (Windows PC).
+      - SPRING_DATABASE_URL=${SPRING_DATABASE_URL}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - JWT_SECRET=${JWT_SECRET}
+      - ML_URL=${ML_URL}
+    networks:
+      - finance-net
+
+    # Service 2 : The Python ML Service
+  ml-service:
+    build:
+      context: ./financeMLService
+    container_name: ml-service-compose
+    restart: unless-stopped
+    networks:
+      - finance-net
+
+  # Service 3: The React Frontend
+  frontend:
+    build:
+      context: ./financeFrontend
+      # This is still correct. The Nginx server will proxy requests to the backend container.
+      args:
+        - VITE_API_BASE_URL=/api
+    container_name: frontend-compose
+    restart: unless-stopped
+    ports:
+      - "5173:80"
+    networks:
+      - finance-net
+    # This tells the frontend to wait for the backend to be ready
+    depends_on:
+      - backend
+
+
+# Define the network
+networks:
+  finance-net:
+    driver: bridge
